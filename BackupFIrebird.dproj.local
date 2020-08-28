@@ -2,9 +2,9 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2020/02/01 14:00:03.000.588,=C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2020/02/01 14:01:37.000.248,C:\sistemas\projeto\NewBacukp\Uprincipal.pas=C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
-    <Transaction>2020/02/01 14:01:37.000.248,C:\sistemas\projeto\NewBacukp\Uprincipal.dfm=C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2020/02/01 14:01:55.000.526,C:\sistemas\projeto\NewBacukp\BackupFIrebird.dproj=C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2020/02/01 14:01:37.000.248,C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\sistemas\projeto\NewBacukp\Uprincipal.dfm</Transaction>
+    <Transaction>2020/02/01 14:01:37.000.248,C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\sistemas\projeto\NewBacukp\Uprincipal.pas</Transaction>
+    <Transaction>2020/02/01 14:01:55.000.526,C:\Users\Gustavo\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\sistemas\projeto\NewBacukp\BackupFIrebird.dproj</Transaction>
     <Transaction>2020/02/01 15:09:37.000.842,=C:\sistemas\projeto\NewBacukp\uAjuda.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -11,7 +11,8 @@ uses
   FireDAC.Phys.FBDef, FireDAC.VCLUI.Wait, FireDAC.Phys.IBWrapper,
   FireDAC.Phys.IBBase, Data.DB, FireDAC.Comp.Client,ShellApi, Vcl.Samples.Spin,
   Vcl.Buttons, IdBaseComponent, IdComponent, IdTCPConnection, IdTCPClient,
-  IdCmdTCPClient ;
+  IdCmdTCPClient, FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf,
+  FireDAC.DApt, Vcl.Grids, Vcl.DBGrids, FireDAC.Comp.DataSet;
 
 
 type
@@ -54,6 +55,11 @@ type
     Button1: TButton;
     Button2: TButton;
     FDFBOnline: TFDFBOnlineValidate;
+    FDIBConfig1: TFDIBConfig;
+    TabSheet2: TTabSheet;
+    Edtonline: TEdit;
+    BtnProcurarGDBOk: TButton;
+    Button5: TButton;
     procedure FbRestoreProgress(ASender: TFDPhysDriverService;
       const AMessage: string);
     procedure FDIBBackup1Progress(ASender: TFDPhysDriverService;
@@ -76,8 +82,6 @@ type
     procedure FDIBBackup1BeforeExecute(Sender: TObject);
     procedure FDFBOnlineValidateAfterExecute(Sender: TObject);
     procedure FDFBOnlineValidateBeforeExecute(Sender: TObject);
-
-    procedure MmBackupChange(Sender: TObject);
     procedure FDFBOnlineAfterExecute(Sender: TObject);
     procedure FDFBOnlineBeforeExecute(Sender: TObject);
     procedure FDFBOnlineError(ASender, AInitiator: TObject;
@@ -85,6 +89,9 @@ type
     procedure FDFBOnlineProgress(ASender: TFDPhysDriverService;
       const AMessage: string);
     procedure Button2Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
+    procedure BtnProcurarGDBOkClick(Sender: TObject);
 
   private
     { Private declarations }
@@ -105,86 +112,64 @@ uses uAjuda;
 
 {TFrmPrincipal}
       {Aqui gerar o GDBOK}
+procedure TFrmPrincipal.BtnProcurarGDBOkClick(Sender: TObject);
+begin
+OpenDialog1.Execute;
+ Edtonline.Text:=OpenDialog1.FileName +'GDBOK';
+end;
+
 procedure TFrmPrincipal.BtnRestoreClick(Sender: TObject);
 begin
-
-{while
-ProgressBar1.Position < 100 do
-    begin
-      if ProgressBar1.Position < 10 then
-        begin
-          ProgressBar1.Position := ProgressBar1.Position + 1;
-          Sleep(100);
-        end
-      else begin
-          ProgressBar1.Position := ProgressBar1.Position + 1;
-          Sleep(50);
-      end;
-    end;}
-FbRestore.UserName :=Edt_User.text;
-FbRestore.Password :=Edt_Senha.text;
-FbRestore.Host := EdtHost.Text;
-FbRestore.Port := EdtPorta.Value;
-FbRestore.Protocol := ipTCPIP;
-FbRestore.Database :=Edt_GDBok.Text;
-FbRestore.BackupFiles.text:=Edt_CaminhoGBK.Text;
-FbRestore.Restore;
-MessageDlg('Restore realizado com sucesso!', mtInformation, [mbOK], 0);
-
+      FbRestore.UserName :=Edt_User.text;
+      FbRestore.Password :=Edt_Senha.text;
+      FbRestore.Host := EdtHost.Text;
+      FbRestore.Port := EdtPorta.Value;
+      FbRestore.Protocol := ipTCPIP;
+      FbRestore.Database :=Edt_GDBok.Text;
+      FbRestore.BackupFiles.text:=Edt_CaminhoGBK.Text;
+      FbRestore.Restore;
+      MessageDlg('Restore realizado com sucesso!', mtInformation, [mbOK], 0);
+      MmBackup.Lines.Add('Log Gravado em c:\sistemas\LogRestore.txt') ;
+      MmBackup.Lines.SaveToFile('c:\sistemas\LogRestore.txt');
 end;
           {Aqui Salva o GDBOK}
 
 procedure TFrmPrincipal.BtnSalvarGDBokClick(Sender: TObject);
 begin
-OpenDialog1.filter:='GDBOK';
+//OpenDialog1.filter:='GDBOK';
 OpenDialog1.Execute;
-Edt_GDBok.Text:=OpenDialog1.Filename;
+Edt_GDBok.Text:=OpenDialog1.Filename + 'GDBOK';
 
 end;
       {Aqui gerar o gbk}
 
 procedure TFrmPrincipal.Btn_BackupClick(Sender: TObject);
 begin
-{while
-ProgressBar1.Position < 100 do
-    begin
-      if ProgressBar1.Position < 10 then
-        begin
-          ProgressBar1.Position := ProgressBar1.Position + 1;
-          Sleep(100);
-        end
-      else begin
-          ProgressBar1.Position := ProgressBar1.Position + 1;
-          Sleep(50);
-      end;
-    end;   }
-
-
-FDIBBackup1.UserName :=Edt_User.text;
-FDIBBackup1.Password :=Edt_Senha.text;
-FDIBBackup1.Host := EdtHost.Text;
-FDIBBackup1.Port := EdtPorta.Value;
-FDIBBackup1.Protocol := ipTCPIP;
-FDIBBackup1.Database := EdtCaminhoDados.Text;
-FDIBBackup1.BackupFiles.Text := EdtCaminhoDados.Text + '.gbk';
-FDIBBackup1.Backup;
-
-MessageDlg('Backup realizado com sucesso!', mtInformation, [mbOK], 0);
-
-
+      FDIBBackup1.UserName :=Edt_User.text;
+      FDIBBackup1.Password :=Edt_Senha.text;
+      FDIBBackup1.Host := EdtHost.Text;
+      FDIBBackup1.Port := EdtPorta.Value;
+      FDIBBackup1.Protocol := ipTCPIP;
+      FDIBBackup1.Database := EdtCaminhoDados.Text;
+      FDIBBackup1.BackupFiles.Text := EdtCaminhoDados.Text + '.gbk';
+      FDIBBackup1.Backup;
+      MessageDlg('Backup realizado com sucesso!', mtInformation, [mbOK], 0);
+      MmBackup.Lines.Add('Log Gravado em c:\sistemas\logbackup.txt') ;
+      MmBackup.Lines.SaveToFile('c:\sistemas\logbackup.txt');
 end;
 
       {Aqui Proucurar o GDB}
 
 procedure TFrmPrincipal.Btn_ProcurarGDBClick(Sender: TObject);
 begin
-OpenDialog1.Filter:='*.gdb';
+//OpenDialog1.Filter:='*.gdb';
 OpenDialog1.Execute;
 EdtCaminhoDados.text:=OpenDialog1.FileName;
 end;
               {COLOCAR O BANCO ONLINE}
 procedure TFrmPrincipal.Button2Click(Sender: TObject);
 begin
+FDFBOnline.DriverLink:=FDPhysFBDriverLink1;
 FDFBOnline.UserName :=Edt_User.Text;
 FDFBOnline.Password :=Edt_Senha.Text;
 FDFBOnline.Host :=EdtHost.text;
@@ -197,6 +182,40 @@ MessageDlg('Validação do banco realizada com sucesso!', mtInformation, [mbOK], 0
 
 end;
 
+procedure TFrmPrincipal.Button3Click(Sender: TObject);
+var
+    QrSqlErros:TFdquery ;
+    conexao: TFDConnection;
+begin
+
+
+  if QrSqlErros.Active then
+     QrSqlErros.Close;
+
+     QrSqlErros.SQL.Clear; //limpar a instrução sql
+     QrSqlErros.SQL.Add('select * FROM RDB$INDICES');
+     QrSqlErros.SQL.Add('WHERE RDB$SYSTEM_FLAG IS NOT NULL AND RDB$SYSTEM_FLAG = 0');
+     QrSqlErros.SQL.Add('and RDB$INDICES.rdb$index_inactive <> 0');
+     QrSqlErros.ExecSQL;
+
+     // Exibir Sql no campo Meno
+     MmBackup.Lines.add('exucução de Sql Erros');
+     MmBackup.Lines.Add(QrSqlErros.SQL.Text);
+     QrSqlErros.Open;
+       end;
+
+procedure TFrmPrincipal.Button5Click(Sender: TObject);
+begin
+FDIBConfig1.DriverLink:=FDPhysFBDriverLink1;
+FDIBConfig1.UserName:=Edt_User.text;
+FDIBConfig1.Password:=Edt_Senha.Text;
+FDIBConfig1.Host:=EdtHost.Text;
+FDIBConfig1.Protocol:=ipTCPIP;
+FDIBConfig1.Database:=Edt_GDBok.Text;
+FDIBConfig1.OnlineDB;
+
+end;
+
 procedure TFrmPrincipal.FbRestoreAfterExecute(Sender: TObject);
 begin
 MmBackup.Lines.Add('Restauração Concluida com sucesso !')
@@ -204,9 +223,9 @@ end;
                 {Aqui Proucurar o GBK}
 procedure TFrmPrincipal.Btn_ProcurarGbKClick(Sender: TObject);
 begin
-OpenDialog1.Filter:='*.gbk';
-OpenDialog1.Execute;
-Edt_CaminhoGBK.Text:=OpenDialog1.FileName;
+//OpenDialog1.Filter:='*.gbk';
+SaveDialog1.Execute;
+Edt_CaminhoGBK.Text:=SaveDialog1.FileName +'.GBK';
 
 end;
 
@@ -290,10 +309,7 @@ begin
 MmBackup.Lines.Add('Validação Concluída com sucesso!');
 end;
 
-procedure TFrmPrincipal.MmBackupChange(Sender: TObject);
-begin
 
-end;
 
 {Abertura da Janela Help}
 procedure TFrmPrincipal.SpeedButton1Click(Sender: TObject);

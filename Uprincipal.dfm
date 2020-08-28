@@ -169,20 +169,17 @@
     Color = clActiveCaption
     ReadOnly = True
     TabOrder = 0
-    OnChange = MmBackupChange
-    ExplicitWidth = 805
   end
   object PageControl1: TPageControl
     Left = 0
     Top = 129
     Width = 815
     Height = 107
-    ActivePage = Online
+    ActivePage = Backup
     Align = alTop
-    TabOrder = 1
+    TabOrder = 2
     object Backup: TTabSheet
       Caption = 'Backup'
-      ExplicitWidth = 797
       object Label5: TLabel
         Left = 3
         Top = 3
@@ -233,7 +230,6 @@
     object Restore: TTabSheet
       Caption = 'Restore'
       ImageIndex = 1
-      ExplicitWidth = 797
       object Label6: TLabel
         Left = 2
         Top = 0
@@ -300,7 +296,7 @@
     object Online: TTabSheet
       Caption = 'Online'
       ImageIndex = 3
-      ExplicitWidth = 797
+      TabVisible = False
       object Edit1: TEdit
         Left = 10
         Top = 32
@@ -337,7 +333,6 @@
     object Avançado: TTabSheet
       Caption = 'Avan'#231'ado'
       ImageIndex = 2
-      ExplicitWidth = 797
       object Label2: TLabel
         Left = 9
         Top = 15
@@ -409,6 +404,42 @@
         Value = 3050
       end
     end
+    object TabSheet2: TTabSheet
+      Caption = 'Online'
+      ImageIndex = 5
+      object Edtonline: TEdit
+        Left = 11
+        Top = 34
+        Width = 438
+        Height = 21
+        TabOrder = 0
+        Text = 'C:\sistemas\fdcmarket\dados\fdcmarket.gbdok'
+      end
+      object BtnProcurarGDBOk: TButton
+        Left = 455
+        Top = 32
+        Width = 90
+        Height = 25
+        Caption = 'Procurar GDOK'
+        TabOrder = 1
+        OnClick = BtnProcurarGDBOkClick
+      end
+      object Button5: TButton
+        Left = 592
+        Top = 3
+        Width = 81
+        Height = 57
+        Caption = 'ONLINE'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -15
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        OnClick = Button5Click
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
@@ -418,8 +449,7 @@
     Align = alTop
     Color = clWindow
     ParentBackground = False
-    TabOrder = 2
-    ExplicitWidth = 805
+    TabOrder = 1
     object Image1: TImage
       Left = 4
       Top = 0
@@ -839,11 +869,9 @@
         Width = 100
       end
       item
-        Text = 'Vers'#227'o:1.01'
+        Text = 'Vers'#227'o:1.02'
         Width = 50
       end>
-    ExplicitTop = 474
-    ExplicitWidth = 805
   end
   object FbRestore: TFDIBRestore
     OnError = FbRestoreError
@@ -851,8 +879,8 @@
     AfterExecute = FbRestoreAfterExecute
     DriverLink = FDPhysFBDriverLink1
     OnProgress = FbRestoreProgress
-    Left = 120
-    Top = 256
+    Left = 16
+    Top = 248
   end
   object FDIBBackup1: TFDIBBackup
     OnError = FDIBBackup1Error
@@ -860,25 +888,29 @@
     AfterExecute = FDIBBackup1AfterExecute
     DriverLink = FDPhysFBDriverLink1
     OnProgress = FDIBBackup1Progress
-    Left = 212
-    Top = 257
+    Left = 68
+    Top = 249
   end
   object FDPhysFBDriverLink1: TFDPhysFBDriverLink
-    Left = 448
-    Top = 285
+    Left = 56
+    Top = 317
   end
   object OpenDialog1: TOpenDialog
-    Left = 672
-    Top = 264
+    FileName = 'FDCMARKET'
+    Filter = 'GDB|*GDB|GDBOK|*GDBOK|GBK|*GBK'
+    Left = 712
+    Top = 248
   end
   object SaveDialog1: TSaveDialog
-    Left = 544
-    Top = 272
+    FileName = 'FDCMARKET'
+    Filter = 'GDBOK|*GDBOK|GBK|*GBK'
+    Left = 632
+    Top = 256
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    Left = 680
-    Top = 341
+    Left = 728
+    Top = 325
   end
   object FDFBOnline: TFDFBOnlineValidate
     OnError = FDFBOnlineError
@@ -886,7 +918,12 @@
     AfterExecute = FDFBOnlineAfterExecute
     DriverLink = FDPhysFBDriverLink1
     OnProgress = FDFBOnlineProgress
-    Left = 496
-    Top = 376
+    Left = 808
+    Top = 440
+  end
+  object FDIBConfig1: TFDIBConfig
+    DriverLink = FDPhysFBDriverLink1
+    Left = 120
+    Top = 248
   end
 end
